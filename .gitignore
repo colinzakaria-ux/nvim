@@ -1,0 +1,20 @@
+# .gitignore for Neovim
+
+# Ignore files from package managers
+/pack/
+/plugged/
+
+# Ignore session, swap, and undo files
+*.swp 
+*.swo 
+*.swn 
+.netrwhist 
+*~
+*viminfo*
+.undo/
+.sessions/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
