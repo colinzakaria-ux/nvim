@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/plugins/lsp.lua (Corrected Version)
+-- ~/.config/nvim/lua/plugins/lsp.lua (Standard LSP & Autocompletion Configuration)
 
 return {
   -- LSP Configuration & Manager
@@ -30,13 +30,9 @@ return {
       -- Setup mason so it can manage LSPs
       require("mason").setup()
       
-      -- **THE FIX IS HERE**
-      -- The `setup_handlers` function was removed. Instead, the handlers are
-            -- now passed directly to the `mason-lspconfig.setup` function.
       require("mason-lspconfig").setup({
         -- A list of servers to automatically install if they're not already installed
         ensure_installed = { "lua_ls" },
-        -- This is the new part
         handlers = {
           function(server_name) -- default handler (for servers that require no special options)
             require("lspconfig")[server_name].setup({
@@ -48,28 +44,38 @@ return {
     end,
   },
 
-  -- Autocompletion
+  -- Autocompletion (nvim-cmp)
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp", -- Source for LSP
-      "hrsh7th/cmp-buffer",   -- Source for text in current buffer
-      "hrsh7th/cmp-path",     -- Source for file paths
-      "L3MON4D3/LuaSnip",     -- Snippet engine
+      "hrsh7th/cmp-nvim-lsp", 
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "L3MON4D3/LuaSnip",
+      -- The Copilot bridge plugin 'zbirenbaum/copilot-cmp' has been removed.
     },
     config = function()
       local cmp = require('cmp')
       cmp.setup({
+        -- Copilot source removed. Prioritizing LSP and snippets.
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
         }),
+        
         mapping = cmp.mapping.preset.insert({
+          -- Standard navigation keys
           ['<C-k>'] = cmp.mapping.select_prev_item(),
-          ['<C-j>'] = cmp.mapping.select_next_item(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<C-j>'] = cmp.mapping.select_next_item(), -- <C-j> restored for navigation
+          
+          -- <CR> (Enter) now accepts the selected suggestion by default
+          -- select=false prevents auto-selection and allows you to type to filter
+          ['<CR>'] = cmp.mapping.confirm({ select = false }), 
+          
+          -- Optional: You can still use <C-Space> to manually trigger or refine suggestions
+          ['<C-Space>'] = cmp.mapping.complete(),
         }),
       })
     end,
