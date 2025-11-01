@@ -1,8 +1,12 @@
+Certainly, here is the complete, final `README.md` file, incorporating all the plugin details, keybindings, and the foundational settings confirmed by your `init.lua`.
+
+-----
+
 # 💤 nvim – A Modern, Minimalist Neovim Configuration
 
 A fast, feature-rich Neovim setup built around **Lazy.nvim**. All plugins are lazy-loaded, so Neovim starts in **$\approx$ 30 ms** on a typical laptop.
 
----
+-----
 
 ## TL;DR
 
@@ -11,74 +15,94 @@ This configuration is designed for **Arch Linux** and derivatives.
 ```bash
 # One-liner for a fresh Arch/EndeavourOS machine
 sudo pacman -S --needed --noconfirm git neovim
-git clone --depth=1 [https://github.com/colinzakaria-ux/nvim.git](https://github.com/colinzakaria-ux/nvim.git) ~/.config/nvim
+git clone --depth=1 https://github.com/colinzakaria-ux/nvim.git ~/.config/nvim
 nvim +'Lazy sync' +'qa'
+```
 
-The first launch bootstraps Lazy.nvim, downloads every plugin, and runs :TSUpdate. Subsequent launches are instantaneous.
+The first launch bootstraps Lazy.nvim, downloads every plugin, and runs `:TSUpdate`. Subsequent launches are instantaneous.
 
-✨ Highlights
+-----
 
+## ✨ Highlights
+
+The configuration loads plugins from the `lua/plugins/` directory.
+
+```
 | Category | Plugin(s) | Why it shines |
 | :--- | :--- | :--- |
 | **Plugin manager** | `folke/lazy.nvim` | Lightning-fast lazy loading, declarative specs, automatic updates. |
-| **LSP & diagnostics** | `neovim/nvim-lspconfig`, `williamboman/mason.nvim`, `williamboman/mason-lspconfig.nvim` | One-click installation of language servers, linters, formatters; zero-config defaults. |
-| **Completion** | `hrsh7th/nvim-cmp`, `hrsh7th/cmp-nvim-lsp`, `hrsh7th/cmp-buffer`, `hrsh7th/cmp-path`, `L3MON4D3/LuaSnip` | Context-aware completions with snippet expansion. |
+| **LSP & Manager** | `neovim/nvim-lspconfig`, `williamboman/mason.nvim` | One-click installation of language servers and zero-config defaults. |
+| **Completion** | `hrsh7th/nvim-cmp`, `L3MON4D3/LuaSnip` | Context-aware completions with snippet expansion, prioritizing LSP. |
 | **File explorer** | `nvim-neo-tree/neo-tree.nvim` | Sidebar file tree with Git status and icons. |
-| **Terminal** | `akinsho/toggleterm.nvim` | Floating or persistent terminal toggled with a single keystroke. |
-| **Auto-pairs** | `windwp/nvim-autopairs` | Automatic insertion of matching brackets/quotes, integrated with nvim-cmp. |
-| **UI polish** | `folke/noice.nvim` | Replaces the default command-line, messages, and popup-menu with a sleek UI (LSP progress, hover, signatures, etc.). |
-| **Statusline** | `nvim-lualine/lualine.nvim` | Minimal, performant statusline with mode, branch, diff, file info, and a custom Zsh-virtual-env component. |
-| **Syntax & indentation** | `nvim-treesitter/nvim-treesitter`, `windwp/nvim-ts-autotag` | Accurate syntax highlighting, smart indentation, automatic HTML/XML tag closing. |
+| **Terminal** | `akinsho/toggleterm.nvim` | Floating or persistent terminal toggled with a single keystroke (`<C-\>`). |
+| **Auto-pairs** | `windwp/nvim-autopairs` | Automatic insertion of matching brackets/quotes, integrates with nvim-cmp. |
+| **UI polish** | `folke/noice.nvim` | Replaces the default command-line, messages, and popups with a sleek UI. |
+| **Statusline** | `nvim-lualine/lualine.nvim` | Minimal, performant statusline with mode, branch, diff, file info, and optional Zsh-virtual-env component. |
+| **Syntax & Tags** | `nvim-treesitter/nvim-treesitter`, `windwp/nvim-ts-autotag` | Accurate syntax highlighting, smart indentation, automatic HTML/XML tag closing. |
 | **Key-binding hints** | `folke/which-key.nvim` | Pops up possible `<leader>` bindings after you press the leader key. |
-| **Colorscheme** | `folke/tokyonight.nvim` | Dark, low-contrast theme that works great with the UI plugins above. |
-| **AI assistance** | `github/copilot.vim` | Inline AI suggestions (ghost text) with sensible defaults. |
+| **Colorscheme** | `folke/tokyonight.nvim` | Dark, low-contrast theme loaded with high priority. |
+| **AI assistance** | `github/copilot.vim`, `jackMort/ChatGPT.nvim` | Inline AI suggestions (ghost text) and dedicated GPT commands. |
+```
 
-All plugins are lazy-loaded (most on VeryLazy or on the relevant filetype/event).
+All plugins are lazy-loaded (most on `VeryLazy` or on the relevant filetype/event).
 
-📦 Prerequisites
+-----
 
+## 📦 Prerequisites
+
+```
 | Requirement | Install (Arch/Endeavour OS) |
 | :--- | :--- |
 | **Neovim $\ge$ 0.9** | `sudo pacman -S neovim` |
 | **Git** | `sudo pacman -S git` |
 | **Nerd Font (for icons)** | Install any Nerd Font (e.g., **JetBrainsMono Nerd Font**) and set it in your terminal emulator. |
 | **True-color terminal** | Most modern terminals (Kitty, Alacritty, iTerm2, …) work out of the box. |
+```
 
-For other distros replace pacman with apt, dnf, or your favorite package manager.
+For other distros replace `pacman` with `apt`, `dnf`, or your favorite package manager.
 
-🚀 Installation
+-----
 
-    Backup any existing config (optional)
-    Bash
+## 🚀 Installation
 
-mv ~/.config/nvim{,.bak}
+1.  **Backup any existing config (optional)**
 
-Clone the repository
-Bash
+    ```bash
+    mv ~/.config/nvim{,.bak}
+    ```
 
-git clone --depth=1 [https://github.com/colinzakaria-ux/nvim.git](https://github.com/colinzakaria-ux/nvim.git) ~/.config/nvim
+2.  **Clone the repository**
 
-Alternative – keep the repo elsewhere and symlink it:
-Bash
+    ```bash
+    git clone --depth=1 https://github.com/colinzakaria-ux/nvim.git ~/.config/nvim
+    ```
 
-git clone --depth=1 [https://github.com/colinzakaria-ux/nvim.git](https://github.com/colinzakaria-ux/nvim.git) ~/dotfiles/nvim
-ln -sfn ~/dotfiles/nvim ~/.config/nvim
+    *Alternative – keep the repo elsewhere and symlink it:*
 
-Bootstrap the plugins
-Bash
+    ```bash
+    git clone --depth=1 https://github.com/colinzakaria-ux/nvim.git ~/dotfiles/nvim
+    ln -sfn ~/dotfiles/nvim ~/.config/nvim
+    ```
 
+3.  **Bootstrap the plugins**
+
+    ```bash
     nvim +'Lazy sync' +'qa'
+    ```
 
-The first launch will download every plugin, run :TSUpdate for Treesitter parsers, and compile any native extensions. After this run, Neovim starts instantly.
+The first launch will download every plugin, run `:TSUpdate` for Treesitter parsers, and compile any native extensions. After this run, Neovim starts instantly.
 
-⌨️ Usage & Keybindings
+-----
 
-Leader key: <Space> (all <leader> shortcuts below use the spacebar).
+## ⌨️ Usage & Keybindings
 
-Press <Space> in normal mode, and which-key will pop up a transient window listing all the available bindings.
+**Leader key:** `<Space>` (all `<leader>` shortcuts below use the spacebar).
 
-Basic File Operations (Normal Mode)
+Press `<Space>` in normal mode, and **which-key** will pop up a transient window listing all the available bindings.
 
+### Basic File Operations (Normal Mode)
+
+```
 | Command | Action |
 | :--- | :--- |
 | :w | Write (save) the current file |
@@ -86,9 +110,11 @@ Basic File Operations (Normal Mode)
 | :x | Save (if modified) and quit |
 | :q | Quit the current window/split |
 | :q! | Quit without saving changes |
+```
 
-Window & Split Management (Normal Mode)
+### Window & Split Management (Normal Mode)
 
+```
 | Keybinding | Action |
 | :--- | :--- |
 | <leader>sv | Split Vertically |
@@ -97,78 +123,72 @@ Window & Split Management (Normal Mode)
 | <C-j> / <C-k> | Move focus down/up between splits |
 | <C-Up> / <C-Down> | Increase/Decrease split height |
 | <C-Left> / <C-Right> | Increase/Decrease split width |
+```
 
-Plugin Keybindings (Normal Mode)
+### Plugin Keybindings (Normal Mode)
 
+```
 | Keybinding | Action | Plugin |
 | :--- | :--- | :--- |
 | <leader>e | Toggle file explorer | neo-tree.nvim |
 | <C-\> | Toggle floating terminal | toggleterm.nvim |
-| <leader>ff | Find Files | telescope.nvim |
-| <leader>fg | Find text via live grep | telescope.nvim |
 | <leader>ca | ChatGPT Ask (opens prompt) | ChatGPT.nvim |
+| <leader>co | Toggle Copilot service on/off | copilot.vim |
 | K | Show hover documentation | nvim-lspconfig |
 | gd | Go to Definition | nvim-lspconfig |
 | gr | Go to References | nvim-lspconfig |
-| <leader>la | Show LSP Actions | nvim-lspconfig |
+| <leader>la | Show LSP Code Actions | nvim-lspconfig |
 | <leader>lr | LSP Rename symbol | nvim-lspconfig |
-| <leader>co | Toggle Copilot on/off | copilot.vim |
-| <leader>bb | Show buffer list (quick switch) | which-key.nvim |
 | <Esc> | Dismiss Noice popup / clear hlsearch | noice.nvim |
+```
 
-🛠️ Extending / Customising
+**Visual Mode (Selection):**
 
-All plugin specifications live in lua/plugins/. Each file returns a table that Lazy.nvim consumes, e.g.:
-Lua
+```
+| Keybinding | Action | Plugin |
+| :--- | :--- | :--- |
+| <leader>ce | ChatGPT Edit with Instructions | ChatGPT.nvim |
+```
 
--- lua/plugins/lsp.lua
-return {
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    },
-    config = function()
-      -- LSP on-attach, Mason setup, etc.
-    end,
-  },
-  -- …other plugins…
-}
+-----
 
-Adding a new plugin
+## 🛠️ Extending / Customising
 
-    Create lua/plugins/<name>.lua.
+All plugin specifications live in `lua/plugins/`. Lazy.nvim loads all files from this directory.
 
-    Return a table with the plugin spec (follow the existing pattern).
+### Adding a new plugin
 
-    Run nvim +'Lazy sync' +'qa' to install it.
+1.  Create `lua/plugins/<name>.lua`.
+2.  Return a table with the plugin spec (follow the existing pattern).
+3.  Run `nvim +'Lazy sync' +'qa'` to install it.
 
-📜 License
+-----
 
-This configuration is released under the MIT License – feel free to copy, remix, and use it in your own setups.
+## 📜 License
 
-🤝 Contributing
+This configuration is released under the **MIT License** – feel free to copy, remix, and use it in your own setups.
 
-    Fork the repository.
+-----
 
-    Create a feature branch (git checkout -b feat/awesome-thing).
+## 🤝 Contributing
 
-    Make your changes (add plugins, tweak keymaps, improve docs).
+1.  Fork the repository.
+2.  Create a feature branch (`git checkout -b feat/awesome-thing`).
+3.  Make your changes (add plugins, tweak keymaps, improve docs).
+4.  Run `nvim +'Lazy sync' +'qa'` to ensure everything builds.
+5.  Submit a Pull Request with a clear description of what you changed and why.
 
-    Run nvim +'Lazy sync' +'qa' to ensure everything builds.
+**Guideline:** Keep the lazy-loading philosophy – plugins should load only when needed (filetype, command, or `VeryLazy` event) to preserve the ultra-fast startup time.
 
-    Submit a Pull Request with a clear description of what you changed and why.
+-----
 
-Guideline: Keep the lazy-loading philosophy – plugins should load only when needed (filetype, command, or VeryLazy event) to preserve the ultra-fast startup time.
+## 🎉 Ready to code?
 
-🎉 Ready to code?
-
-Bash
-
+```bash
 # Fresh Arch/EndeavourOS machine
 sudo pacman -S --needed --noconfirm git neovim
-git clone --depth=1 [https://github.com/colinzakaria-ux/nvim.git](https://github.com/colinzakaria-ux/nvim.git) ~/.config/nvim
+git clone --depth=1 https://github.com/colinzakaria-ux/nvim.git ~/.config/nvim
 nvim +'Lazy sync' +'qa'
+```
 
-Enjoy a blazing-fast, feature-rich, and beautiful Neovim experience! 🚀
+Enjoy a blazing-fast, feature-rich, and beautiful Neovim experience\! 🚀
